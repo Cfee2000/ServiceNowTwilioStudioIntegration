@@ -8,7 +8,11 @@ exports.handler = function (context, event, callback) {
   console.log(event.number);
   console.log(context.ACCOUNT_SID);
 
-  const client = require('twilio')(context.ACCOUNT_SID, context.AUTH_TOKEN);
+  const client = require('twilio')(
+    context.TWILIO_API_KEY,
+    context.TWILIO_API_SECRET,
+    { accountSid: context.ACCOUNT_SID }
+  );
 
   (async () => {
     await client.studio.v2

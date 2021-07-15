@@ -1,5 +1,6 @@
 exports.handler = function (context, event, callback) {
   const axios = require('axios');
+  console.log(event.From);
 
   let close_code = 'Solved (Permanently)';
 
@@ -18,8 +19,7 @@ exports.handler = function (context, event, callback) {
       url,
       {
         incident_state: '7',
-        close_notes:
-          'Close notes from ' + event.name + ' via SMS: ' + event.closeNotes,
+        close_notes: notes,
         close_code: close_code,
       },
       {

@@ -1,3 +1,8 @@
+#misc (Chris Feehan added)
+.nvmrc
+.twiliodeployinfo
+.twilioserverlessrc
+
 # Logs
 logs
 *.log
