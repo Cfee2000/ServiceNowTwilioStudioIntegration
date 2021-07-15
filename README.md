@@ -1,4 +1,4 @@
-# ServiceNow Twilio Studio Integration for Mulichannel Incident Mangement
+# ServiceNow Twilio Studio Integration for Multichannel Incident Mangement
 
 The repository includes the following:
 
@@ -13,27 +13,15 @@ The function code in this repository uses Node.JS. Make sure you it installed [N
 Download a ZIP file of this repository locally on your computer. Extract the contents and move them to your desired working directory. Open your favorite IDE (eg. Visual Studio Code) and open the working directory associated with this repository to get started. Open a terminal in your IDE (or another terminal program of your choice) to get started.
 
 From the root of your working directory, install the dependencies (see the package.json file for details)
-'''
-npm install
-
-```
+```npm install```
 
 Next, please install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) by running:
 
-```
-
-brew tap twilio/brew && brew install twilio
-
-```
+```brew tap twilio/brew && brew install twilio```
 
 Finally, install the [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/labs/serverless-toolkit) for the Twilio CLI:
 
-```
-
-npm install @twilio-labs/serverless-api
-
-```
+```npm install @twilio-labs/serverless-api```
 
 ## Development
 
-```
