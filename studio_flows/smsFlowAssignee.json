@@ -1,0 +1,454 @@
+{
+  "description": "",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall"
+        },
+        {
+          "next": "AssignIncident",
+          "event": "incomingRequest"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "name": "AssignIncident",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "YesOrNoAccept",
+          "event": "incomingMessage"
+        },
+        {
+          "next": "StartVoiceFlow",
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 50,
+          "y": 260
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Hi {{flow.data.name}}. An urgency level {{flow.data.urgency}} incident #{{flow.data.number}}  has been assigned to you. The incident description is, \"{{flow.data.short_description}}\". \n\nReply \"yes\" in the next 60 seconds to work the incident. \n\nIf you are unable to, please reply \"no\" so we can immediately contact the next associate.",
+        "timeout": "10"
+      }
+    },
+    {
+      "name": "IncidentNextAction",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "event": "noMatch"
+        },
+        {
+          "next": "Comment",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Comment",
+              "arguments": ["{{widgets.AcceptIncident.inbound.Body}}"],
+              "type": "equal_to",
+              "value": "comment"
+            }
+          ]
+        },
+        {
+          "next": "Resolve",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "Resolve",
+              "arguments": ["{{widgets.AcceptIncident.inbound.Body}}"],
+              "type": "equal_to",
+              "value": "resolve"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.AcceptIncident.inbound.Body}}",
+        "offset": {
+          "x": -1320,
+          "y": 1400
+        }
+      }
+    },
+    {
+      "name": "YesOrNoAccept",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "NoAccept",
+          "event": "noMatch"
+        },
+        {
+          "next": "IncidentAcceptedAction",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value is YES",
+              "arguments": ["{{widgets.AssignIncident.inbound.Body}}"],
+              "type": "regex",
+              "value": "(?i)(.)*(y|ye|yes|yea|yeah)(.)*"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.AssignIncident.inbound.Body}}",
+        "offset": {
+          "x": 60,
+          "y": 590
+        }
+      }
+    },
+    {
+      "name": "NoAccept",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 70,
+          "y": 1020
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Thanks for the reply. We will look for another associate to work this incident."
+      }
+    },
+    {
+      "name": "AcceptIncident",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "IncidentNextAction",
+          "event": "incomingMessage"
+        },
+        {
+          "next": "ConfirmStillWorkingIncident",
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1200,
+          "y": 860
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Thank you for accepting incident #{{flow.data.number}}. You can login to the system to manage the remediation.\n\nAlternatively, if you are in the field and need to provide quick updates via SMS, here are the following options:\n\nReply \"Comment\" if you'd like to add a note to the incident.\n\nReply \"Resolve\" if the issue has been resolved.",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "ConfirmStillWorkingIncident",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "AcceptIncident",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -570,
+          "y": 1210
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Are you still working the incident #{{flow.data.number}} for {{flow.data.short_description}}? \n\nReply \"Yes\" in the next 60 seconds to confirm.",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "Comment",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "CommentToServiceNow",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -2070,
+          "y": 1600
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Please send a reply with your comment. The comment will be attached to the incident work notes immediately.",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "Resolve",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "ResolveToServiceNow",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1580,
+          "y": 1630
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Please reply with a brief description of the resolution.",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "CommentToServiceNow",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "AcceptIncident",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -2070,
+          "y": 1950
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{widgets.Comment.inbound.Body}}",
+            "key": "comment"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "From"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "ResolveToServiceNow",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "ResolveConfirmation",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -1580,
+          "y": 1960
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{widgets.Resolve.inbound.Body}}",
+            "key": "closeNotes"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "From"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "IncidentAcceptedAction",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "AcceptIncident",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -670,
+          "y": 570
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "ResolveConfirmation",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1580,
+          "y": 2220
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Your resolution notes have been added. Thank you for resolving the incident."
+      }
+    },
+    {
+      "name": "StartVoiceFlow",
+      "type": "run-function",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": 690,
+          "y": 320
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{flow.data.phone}}",
+            "key": "To"
+          },
+          {
+            "value": "+13238256676",
+            "key": "From"
+          },
+          {
+            "value": "{{flow.data.short_description}}",
+            "key": "short_description"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.urgency}}",
+            "key": "urgency"
+          },
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.data.number}}",
+            "key": "number"
+          },
+          {
+            "value": "{{flow.data.assigned_to}}",
+            "key": "assigned_to"
+          }
+        ],
+        "url": ""
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}

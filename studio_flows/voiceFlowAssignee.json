@@ -1,0 +1,527 @@
+{
+  "description": "",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall"
+        },
+        {
+          "next": "CallTheAssignee",
+          "event": "incomingRequest"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "name": "CallTheAssignee",
+      "type": "make-outgoing-call-v2",
+      "transitions": [
+        {
+          "next": "HumanOrMachine",
+          "event": "answered"
+        },
+        {
+          "event": "busy"
+        },
+        {
+          "next": "ReassignIncident",
+          "event": "noAnswer"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "machine_detection_speech_threshold": "2400",
+        "detect_answering_machine": true,
+        "offset": {
+          "x": 60,
+          "y": 300
+        },
+        "recording_channels": "mono",
+        "timeout": 60,
+        "machine_detection": "Enable",
+        "trim": "do-not-trim",
+        "record": false,
+        "machine_detection_speech_end_threshold": "1200",
+        "machine_detection_timeout": "30",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "machine_detection_silence_timeout": "5000"
+      }
+    },
+    {
+      "name": "CallAssignIncident",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "CallAcceptIncident",
+          "event": "keypress"
+        },
+        {
+          "next": "CallAssignIncident",
+          "event": "speech"
+        },
+        {
+          "next": "CallAssignIncident",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -350,
+          "y": 750
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Hi {{flow.data.name}}. An urgency level {{flow.data.urgency}} incident number {{flow.data.number}}  has been assigned to you. The incident description is, \"{{flow.data.short_description}}\". \nPress 1 in the next 60 seconds to work the incident. \nPress 2 if you are unable to work the incident so we can immediately contact the next associate.",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "ReassignIncident",
+      "type": "run-function",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": 520,
+          "y": 660
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.assigned_to}}",
+            "key": "assigned_to"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "CallAcceptIncident",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "CallAssignIncident",
+          "event": "noMatch"
+        },
+        {
+          "next": "IncidentAcceptedAction",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": ["{{widgets.CallAssignIncident.Digits}}"],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "CannotWorkIncident",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": ["{{widgets.CallAssignIncident.Digits}}"],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.CallAssignIncident.Digits}}",
+        "offset": {
+          "x": -340,
+          "y": 1030
+        }
+      }
+    },
+    {
+      "name": "CannotWorkIncident",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "ReassignIncident",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "offset": {
+          "x": 150,
+          "y": 1290
+        },
+        "loop": 1,
+        "say": "Thanks for the reply. We will look for another associate to work this incident.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "CallAccepted",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_2",
+          "event": "keypress"
+        },
+        {
+          "next": "CallAccepted",
+          "event": "speech"
+        },
+        {
+          "next": "CallAccepted",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -940,
+          "y": 1340
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Thank you for accepting incident number {{flow.data.number}}. You can login to the system to manage the remediation.\nPress 1 if you'd like to add a note to the incident.\nPress 2 if the issue has been resolved and you'd like to close the incident.",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "split_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "CallAccepted",
+          "event": "noMatch"
+        },
+        {
+          "next": "CallComment",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": ["{{widgets.CallAccepted.Digits}}"],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "CallResolve",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": ["{{widgets.CallAccepted.Digits}}"],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.CallAccepted.Digits}}",
+        "offset": {
+          "x": -740,
+          "y": 1640
+        }
+      }
+    },
+    {
+      "name": "CallComment",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "CallComment",
+          "event": "keypress"
+        },
+        {
+          "next": "CallCommentToServiceNow",
+          "event": "speech"
+        },
+        {
+          "next": "CallComment",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -1280,
+          "y": 2020
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Please say a brief description of your comment. The comment will be attached to the incident work notes as text.",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "CallCommentToServiceNow",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "say_play_2",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -1270,
+          "y": 2350
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{widgets.CallComment.SpeechResult}}",
+            "key": "comment"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "From"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "say_play_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "offset": {
+          "x": -1270,
+          "y": 2600
+        },
+        "loop": 1,
+        "say": "Thanks, we've added your comments to the work notes of the incident. Please call back at this number we're calling from, which is 323-825-6676, when you are ready to provide another update or close the incident. You can also text back to this number to update the incident as well.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "IncidentAcceptedAction",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "CallAccepted",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -810,
+          "y": 1020
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "CallResolve",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "CallResolve",
+          "event": "keypress"
+        },
+        {
+          "next": "CallResolveToServiceNow",
+          "event": "speech"
+        },
+        {
+          "next": "CallResolve",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -520,
+          "y": 2030
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Please say a brief description of the resolution for the incident. Your description will be added to the resolution notes as text, and we will close out the ticket on your behalf.",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "CallResolveToServiceNow",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "CallResolveConfirmation",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": -490,
+          "y": 2310
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{widgets.CallResolve.SpeechResult}}",
+            "key": "closeNotes"
+          },
+          {
+            "value": "{{flow.data.sys_id}}",
+            "key": "sys_id"
+          },
+          {
+            "value": "{{flow.data.name}}",
+            "key": "name"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "From"
+          }
+        ],
+        "url": ""
+      }
+    },
+    {
+      "name": "CallResolveConfirmation",
+      "type": "say-play",
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Matthew-Neural",
+        "offset": {
+          "x": -520,
+          "y": 2630
+        },
+        "loop": 1,
+        "say": "Your resolution notes have been added. Thank you for resolving the incident. Goodbye.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "HumanOrMachine",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "ReassignIncident",
+          "event": "noMatch"
+        },
+        {
+          "next": "CallAssignIncident",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to human",
+              "arguments": ["{{widgets.CallTheAssignee.AnsweredBy}}"],
+              "type": "equal_to",
+              "value": "human"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.CallTheAssignee.AnsweredBy}}",
+        "offset": {
+          "x": -520,
+          "y": 290
+        }
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}
