@@ -16,7 +16,7 @@ exports.handler = function (context, event, callback) {
 
   (async () => {
     await client.studio.v2
-      .flows('FW1fe84d2ef00e784bb45c7d8fd2d50dd2')
+      .flows(`${context.TWILIO_STUDIO_FLOW_SID}`)
       .executions.create({
         to: event.To,
         from: event.From,
