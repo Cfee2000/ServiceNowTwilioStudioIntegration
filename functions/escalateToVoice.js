@@ -12,7 +12,7 @@ exports.handler = function (context, event, callback) {
 
   (async () => {
     await client.studio.v2
-      .flows(`${context.TWILIO_STUDIO_FLOW_SID}`)
+      .flows(`${context.TWILIO_STUDIO_VOICE_FLOW_SID}`)
       .executions.create({
         to: event.To,
         from: event.From,
