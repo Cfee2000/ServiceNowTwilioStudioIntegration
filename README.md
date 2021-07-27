@@ -1,3 +1,7 @@
+# LEGAL DISCLAIMER
+
+Notice: This code and the information contained herein is not legal advice, and Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
+
 # ServiceNow Twilio Studio Integration for Multichannel Incident Mangement
 
 The repository includes the following:
