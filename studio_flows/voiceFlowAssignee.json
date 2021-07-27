@@ -359,7 +359,7 @@
           "y": 2600
         },
         "loop": 1,
-        "say": "Thanks, we've added your comments to the work notes of the incident. Please call back at this number we're calling from, which is 323-825-6676, when you are ready to provide another update or close the incident. You can also text back to this number to update the incident as well.",
+        "say": "Thanks, we've added your comments to the work notes of the incident. Please call back at this number we're calling from, which is {{contact.channel.address}}, when you are ready to provide another update or close the incident. You can also text back to this number to update the incident as well.",
         "language": "en-US"
       }
     },
