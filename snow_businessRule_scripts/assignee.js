@@ -17,7 +17,7 @@
   //Spin up a REST Message using ServiceNow's Native WebServices API and point to your Twilio Studio Flow REST API Execution URL
   var request = new sn_ws.RESTMessageV2();
   request.setEndpoint(
-    'https://studio.twilio.com/v2/Flows/[YOUR STUDIO FLOW SID]/Executions'
+    'https://studio.twilio.com/v2/Flows/[YOUR STUDIO SMS ASSIGNEE FLOW SID]/Executions'
   );
   request.setHttpMethod('POST');
 
