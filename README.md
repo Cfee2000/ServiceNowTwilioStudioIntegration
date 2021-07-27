@@ -29,3 +29,6 @@ Finally, install the [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/
 
 ## Development
 
+There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted. 
+
+The blog assumes a manual process for development, but if you've installed the CLI per the setup instructions below, then you can use the CLI to upload your Twilio Serverless project directly
