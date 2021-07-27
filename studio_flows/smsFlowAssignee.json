@@ -48,7 +48,7 @@
         "channel": "{{trigger.message.ChannelSid}}",
         "from": "{{flow.channel.address}}",
         "body": "Hi {{flow.data.name}}. An urgency level {{flow.data.urgency}} incident #{{flow.data.number}}  has been assigned to you. The incident description is, \"{{flow.data.short_description}}\". \n\nReply \"yes\" in the next 60 seconds to work the incident. \n\nIf you are unable to, please reply \"no\" so we can immediately contact the next associate.",
-        "timeout": "10"
+        "timeout": "60"
       }
     },
     {
