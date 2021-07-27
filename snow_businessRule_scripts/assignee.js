@@ -11,6 +11,9 @@
   //This will be the Messaging Service SID on your Twilio Account (you need to set this up) and will be used to send SMS
   var from = '[YOUR MESSAGING SERVICE SID]';
 
+  //This will be a Twilio Voice number (in E164 format) that you can use as a CallerID to perform a voice call escalation from SMS
+  var voiceNumber = '[YOUR TWILIO VOICE NUMBER]';
+
   //Spin up a REST Message using ServiceNow's Native WebServices API and point to your Twilio Studio Flow REST API Execution URL
   var request = new sn_ws.RESTMessageV2();
   request.setEndpoint(
@@ -38,6 +41,8 @@
       current.short_description +
       '","phone":"' +
       current.assigned_to.mobile_phone +
+      '","voiceNumber":"' +
+      voiceNumber +
       '", "number":"' +
       current.number +
       '", "sys_id":"' +
