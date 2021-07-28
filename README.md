@@ -26,7 +26,7 @@ The function code in this repository uses Node.JS. Make sure you it installed [N
 
 Here are the steps to get your local environment ready to build and deploy the Twilio Functions in this repository:
 
-```Step 1:``` Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) and [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/labs/serverless-toolkit)<br/>
+```Step 1:``` Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) and [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/labs/serverless-toolkit). You will want to read through these steps thorougly and make sure you understand how to use the CLI, including setting up Twilio Profile(s), before proceeding to next steps.<br/>
 ```Step 2:``` Download a ZIP file of this repository locally on your computer (Alternatively, you can Fork the repository and manage your own version through Github).<br/>
 ```Step 3:``` Extract the contents and move them to your desired working directory.<br/>
 ```Step 4:``` Open your favorite IDE (eg. Visual Studio Code) and open the working directory associated with this repository to get started.<br/>
@@ -42,8 +42,19 @@ npm install
 ```
 twilio serverless:init
 ```
+Now you are all setup with a Twilio Serverless project that you can debug/deploy/iterate against!
 
-```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode). In VSCode, you go to the debugger and create a launch.json file. The most basic setup is as follows, and should work for the default debugger settings:<br/>
+# Deploying Locally from the Twilio CLI
+
+<i>NOTE: You can reference my previous [Flex Plugins and Functions debugging/deploying](https://www.twilio.com/blog/flex-plugins-vs-code-functions-cli) blog post for guidance on the sections below</i><br/>
+
+After running the "init" step above, you can simply run ```twilio serverless:deploy``` from the root directory to deploy your Twilio Functions to your Twilio Account. For subsequent deployments, use ```twilio serverless:deploy -override-existing-project```
+
+# Debugging Locally with your Twilio Functions in VSCode
+
+<i>NOTE: You'll need [NGROK](https://ngrok.com/) installed to run locally debugging successfully, whether you choose to run using a REST Client like Postman, or directly from a running Twilio process (eg. using an HTTP widget from Twilio Studio to point to your NGROK domain and local function)</i><br/>
+    
+If you want to debug your Twilio Functions locally, you have the option to setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode). In VSCode, you go to the debugger and create a launch.json file. The most basic setup is as follows, and should work for the default debugger settings:<br/>
 ```
 {
     "version": "0.2.0",
@@ -57,5 +68,17 @@ twilio serverless:init
     ]
  }
 ```
+There's a few steps you'll need to take to start debugging locally:<br/>
 
+```Step 1:```From the root directory of your project (1 level up from your Functions folder), run the following command to start the debugger (make sure no existing NGROK processing are running)
+
+```
+twilio serverless:start --ngrok=cfeehan --inspect="" 
+```
+
+This will start a debugger process running on the default port 9229, which matches the launch.json file above.
+
+```Step 2:``` In VSCode, go to your Debugger and press the play button to attach to the existing debugger. This will then prep your functions to be hit when setting breakpoints (so go set your breakpoints now!)
+
+```Step 3 (optional):``` This step you can either choose to use Postman if you want to run one-off, ad-hoc queries that hit your Twilio Functions on your NGROK domain, or you can point Twilio Studio to your functions using the [Make HTTP Request](https://www.twilio.com/docs/studio/widget-library/http-request) widget and point to one of your functions (eg. https://[YOUR DOMAIN].ngrok.io/accept_incident), passing in any appropriate parameters as desired.
 
