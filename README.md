@@ -6,7 +6,7 @@ The repository includes the following:
 2. Twilio Studio Flows - the scripts in step #1 call Twilio Studio Flow Execution API, and the flows here provide the functionality to facilitate 2-way communications over SMS and/or Voice
 3. Twilio Functions - these functions provide web service calls to ServiceNow to perform CRUD operations against an Incident record as it's being worked by an assigned ServiceNow Agent.
 
-# Complementary Twilio Blog Post
+# Corresponding Twilio Blog - Jumpstart and LevelUp your ServiceNow Incident Management Solution with Twilio
 
 There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted. The Blog Post reference will help you understand how to setup steps #1 and #2 above. The rest of this readme will be for streamlining step #3, such that you can leverage the Twilio CLI for local debugging and deploying to Twilio Serverless.
 
