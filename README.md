@@ -1,7 +1,3 @@
-# DISCLAIMER
-
-Notice: This code and the information contained herein is not meant to be used in a production deployment. Rather, this code is intended to serve as a means to springboard your Twilio + ServiceNow development, such that you have a model/framework/samples to start from when considering your own custom development of a ServiceNow + Twilio integration. Twilio and its employees do not provide any SLA for this code - it is meant to be used "as-is" to help customers with a reference point for their own use cases and development. Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
-
 # Complementary Twilio Blog Post
 
 There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted.
@@ -84,3 +80,6 @@ This will start a debugger process running on the default port 9229, which match
 
 ```Step 3 (optional):``` This step you can either choose to use Postman if you want to run one-off, ad-hoc queries that hit your Twilio Functions on your NGROK domain, or you can point Twilio Studio to your functions using the [Make HTTP Request](https://www.twilio.com/docs/studio/widget-library/http-request) widget and point to one of your functions (eg. https://[YOUR DOMAIN].ngrok.io/accept_incident), passing in any appropriate parameters as desired.
 
+# DISCLAIMER
+
+Notice: This code and the information contained herein is not meant to be used in a production deployment. Rather, this code is intended to serve as a means to springboard your Twilio + ServiceNow development, such that you have a model/framework/samples to start from when considering your own custom development of a ServiceNow + Twilio integration. Twilio and its employees do not provide any SLA for this code - it is meant to be used "as-is" to help customers with a reference point for their own use cases and development. Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
