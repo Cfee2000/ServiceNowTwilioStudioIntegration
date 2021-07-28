@@ -43,6 +43,19 @@ npm install
 twilio serverless:init
 ```
 
-```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode)<br/>
+```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode). In VSCode, you go to the debugger and create a launch.json file. The most basic setup is as follows, and should work for the default debugger settings:<br/>
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+          {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 9229
+          }
+    ]
+ }
+```
 
-## Development
+
