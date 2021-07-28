@@ -26,19 +26,19 @@ The function code in this repository uses Node.JS. Make sure you it installed [N
 
 Here are the steps to get your local environment ready to build and deploy the Twilio Functions in this repository:
 
-```Step 1:``` Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) and [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/labs/serverless-toolkit)
-```Step 2:``` Download a ZIP file of this repository locally on your computer (Alternatively, you can Fork the repository and manage your own version through Github).
-```Step 3:``` Extract the contents and move them to your desired working directory.
-```Step 4:``` Open your favorite IDE (eg. Visual Studio Code) and open the working directory associated with this repository to get started.
-```Step 5:``` Open a terminal in your IDE (or another terminal program of your choice) to get started.
-```Step 6:``` From the root of your working directory, install the dependencies as follows (see the package.json file for details on what will be installed)
+```Step 1:``` Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) and [Twilio Serverless CLI Plugin](https://www.twilio.com/docs/labs/serverless-toolkit)<br/>
+```Step 2:``` Download a ZIP file of this repository locally on your computer (Alternatively, you can Fork the repository and manage your own version through Github).<br/>
+```Step 3:``` Extract the contents and move them to your desired working directory.<br/>
+```Step 4:``` Open your favorite IDE (eg. Visual Studio Code) and open the working directory associated with this repository to get started.<br/>
+```Step 5:``` Open a terminal in your IDE (or another terminal program of your choice) to get started.<br/>
+```Step 6:``` From the root of your working directory, install the dependencies as follows (see the package.json file for details on what will be installed)<br/>
 
 ```npm install```
 
-```Step 7:``` Initialize your Twilio Serverless Project with the following (requires the Serverless Toolkit from Step #1)
+```Step 7:``` Initialize your Twilio Serverless Project with the following (requires the Serverless Toolkit from Step #1)<br/>
 
 ```twilio serverless:init```
 
-```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode)
+```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode)<br/>
 
 ## Development
