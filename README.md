@@ -33,11 +33,15 @@ Here are the steps to get your local environment ready to build and deploy the T
 ```Step 5:``` Open a terminal in your IDE (or another terminal program of your choice) to get started.<br/>
 ```Step 6:``` From the root of your working directory, install the dependencies as follows (see the package.json file for details on what will be installed)<br/>
 
-```npm install```
+```
+npm install
+```
 
 ```Step 7:``` Initialize your Twilio Serverless Project with the following (requires the Serverless Toolkit from Step #1)<br/>
 
-```twilio serverless:init```
+```
+twilio serverless:init
+```
 
 ```Step 8:``` Setup your local debugging environment to attach to your functions for debugging (setup will vary based on IDE you use, but this instruction will be specifically for VSCode)<br/>
 
