@@ -1,4 +1,4 @@
-# ServiceNow Twilio Studio Integration for Multichannel Incident Mangement
+# ServiceNow Twilio Studio Integration for Real-Time, Bi-Directional Incident Mangement
 
 The repository includes the following:
 
