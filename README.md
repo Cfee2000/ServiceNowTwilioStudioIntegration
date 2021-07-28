@@ -1,6 +1,6 @@
-# LEGAL DISCLAIMER
+# DISCLAIMER
 
-Notice: This code and the information contained herein is not legal advice, and Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
+Notice: This code and the information contained herein is not meant to be used in a production environemnt. Rather, this code is intended to serve as a means to springboard your Twilio + ServiceNow development, such that you have a model/framework/samples to start from when considering your own custom development of a ServiceNow = Twilio integration. Twilio and its employees do not provide any SLA for this code - it is meant to be used "as-is" to help customers with a reference point for their own use cases and development. Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
 
 # Complementary Twilio Blog Post
 
