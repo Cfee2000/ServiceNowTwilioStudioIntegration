@@ -1,11 +1,3 @@
-# Complementary Twilio Blog Post
-
-There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted.
-
-The blog assumes a manual process for using this repository, and as such, if you wish to follow that blog from start to finish without having to do any local javascript development, you can simply walk through the blog step by step in lieu of the below instrucitons.
-
-However, if you're interested in being able to streamline your development by using the Twilio CLI and Serverless Toolkit, then you can use the instructions below to do local development and deploy your functions to Twilio Serverlesss via the CLI. I would recommend this route for intermediate to advanced developers looking to interate and manage changes over time
-
 # ServiceNow Twilio Studio Integration for Multichannel Incident Mangement
 
 The repository includes the following:
@@ -14,7 +6,13 @@ The repository includes the following:
 2. Twilio Studio Flows - the scripts in step #1 call Twilio Studio Flow Execution API, and the flows here provide the functionality to facilitate 2-way communications over SMS and/or Voice
 3. Twilio Functions - these functions provide web service calls to ServiceNow to perform CRUD operations against an Incident record as it's being worked by an assigned ServiceNow Agent.
 
-The Blog Post reference above will help you understand how to setup steps #1 and #2 above. The rest of this readme will be for advanced users to streamline step #3, such that you can leverage the Twilio CLI for local debugging and deploying to Twilio Serverless
+# Complementary Twilio Blog Post
+
+There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted. The Blog Post reference will help you understand how to setup steps #1 and #2 above. The rest of this readme will be for streamlining step #3, such that you can leverage the Twilio CLI for local debugging and deploying to Twilio Serverless.
+
+Thus, if you wish to follow that blog from start to finish without having to do any local javascript development, you can simply walk through the blog step by step in lieu of the below instrucitons.
+
+However, if you're interested in being able to streamline your development by using the Twilio CLI and Serverless Toolkit, then you can use the instructions below to do local development and deploy your functions to Twilio Serverlesss via the CLI. I would recommend this route for intermediate to advanced developers looking to interate and manage changes over time.
 
 ## Local Development Setup (Optional)
 
