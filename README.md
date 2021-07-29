@@ -1,16 +1,4 @@
-# LEGAL DISCLAIMER
-
-Notice: This code and the information contained herein is not legal advice, and Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
-
-# Complementary Twilio Blog Post
-
-There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted.
-
-The blog assumes a manual process for using this repository, and as such, if you wish to follow that blog from start to finish without having to do any local javascript development, you can simply walk through the blog step by step in lieu of the below instrucitons.
-
-However, if you're interested in being able to streamline your development by using the Twilio CLI and Serverless Toolkit, then you can use the instructions below to do local development and deploy your functions to Twilio Serverlesss via the CLI. I would recommend this route for intermediate to advanced developers looking to interate and manage changes over time
-
-# ServiceNow Twilio Studio Integration for Multichannel Incident Mangement
+# ServiceNow Twilio Studio Integration for Real-Time, Bi-Directional Incident Mangement
 
 The repository includes the following:
 
@@ -18,7 +6,13 @@ The repository includes the following:
 2. Twilio Studio Flows - the scripts in step #1 call Twilio Studio Flow Execution API, and the flows here provide the functionality to facilitate 2-way communications over SMS and/or Voice
 3. Twilio Functions - these functions provide web service calls to ServiceNow to perform CRUD operations against an Incident record as it's being worked by an assigned ServiceNow Agent.
 
-The Blog Post reference above will help you understand how to setup steps #1 and #2 above. The rest of this readme will be for advanced users to streamline step #3, such that you can leverage the Twilio CLI for local debugging and deploying to Twilio Serverless
+# Corresponding Twilio Blog - Jumpstart and LevelUp your ServiceNow Incident Management Solution with Twilio
+
+There is a pending blog post that walks through a full POC development using the solution provided in this repository. I will link to that blog once it's posted. The Blog Post reference will help you understand how to setup steps #1 and #2 above. The rest of this readme will be for streamlining step #3, such that you can leverage the Twilio CLI for local debugging and deploying to Twilio Serverless.
+
+Thus, if you wish to follow that blog from start to finish without having to do any local javascript development, you can simply walk through the blog step by step in lieu of the below instrucitons.
+
+However, if you're interested in being able to streamline your development by using the Twilio CLI and Serverless Toolkit, then you can use the instructions below to do local development and deploy your functions to Twilio Serverlesss via the CLI. I would recommend this route for intermediate to advanced developers looking to interate and manage changes over time.
 
 ## Local Development Setup (Optional)
 
@@ -84,3 +78,6 @@ This will start a debugger process running on the default port 9229, which match
 
 ```Step 3 (optional):``` This step you can either choose to use Postman if you want to run one-off, ad-hoc queries that hit your Twilio Functions on your NGROK domain, or you can point Twilio Studio to your functions using the [Make HTTP Request](https://www.twilio.com/docs/studio/widget-library/http-request) widget and point to one of your functions (eg. https://[YOUR DOMAIN].ngrok.io/accept_incident), passing in any appropriate parameters as desired.
 
+# DISCLAIMER
+
+Notice: This code and the information contained herein is not meant to be used in a production deployment. Rather, this code is intended to serve as a means to springboard your Twilio + ServiceNow development, such that you have a model/framework/samples to start from when considering your own custom development of a ServiceNow + Twilio integration. Twilio and its employees do not provide any SLA for this code - it is meant to be used "as-is" to help customers with a reference point for their own use cases and development. Twilio recommends that you consult with your legal counsel to make sure that you are complying with all applicable laws in connection with communications you transmit and receive using Twilio. Ultimately, you are responsible for ensuring that your use of Twilio complies with all applicable laws and regulations. Please also refer to our [**Terms of Service**](https://www.twilio.com/legal/tos>) and [**Acceptable Use Policy**](https://www.twilio.com/legal/aup) for more information.
